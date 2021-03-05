@@ -39,7 +39,8 @@
             "mapped_locations": [
               ["HKEY_CURRENT_USER", "\u0008\u0008\uF013 HKCU:"],
               ["HKEY_LOCAL_MACHINE", "\u0008\u0008\uF013 HKLM:"],
-              ["\\", "\u0008\u0008\uF623 Cert:\\"]
+              ["\\LocalMachine", "\u0008\u0008\uF623 Cert:\\LocalMachine"],
+              ["\\CurrentUser", "\u0008\u0008\uF623 Cert:\\CurrentUser"]
             ]
           }
         },
