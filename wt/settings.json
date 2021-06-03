@@ -33,7 +33,8 @@
             // Put settings here that you want to apply to all profiles.
             "backgroundImageStretchMode": "uniformToFill",
             "backgroundImageOpacity": 0.2,
-            "fontFace": "CaskaydiaCove Nerd Font"
+            "fontFace": "CaskaydiaCove Nerd Font",
+            "bellStyle": "visual"
         },
         "list":
         [
@@ -43,7 +44,7 @@
                 "name": "Windows PowerShell",
                 "commandline": "powershell.exe",
                 "hidden": false,
-                "backgroundImage": "ms-appdata:///Local/img/powershell.jpg",
+                "backgroundImage": "%dotfiles%/wt/img/powershell.jpg",
                 "cursorShape": "underscore"
             },
             {
@@ -52,7 +53,7 @@
                 "name": "Command Prompt",
                 "commandline": "cmd.exe",
                 "hidden": false,
-                "backgroundImage": "ms-appdata:///Local/img/kali.jpg",
+                "backgroundImage": "%dotfiles%/wt/img/kali.jpg",
                 "cursorShape": "vintage"
             },
             {
@@ -61,7 +62,7 @@
                 "name": "PowerShell",
                 "commandline": "C:/Program Files/PowerShell/7/pwsh.exe --nologo",
                 "source": "Windows.Terminal.PowershellCore",
-                "backgroundImage": "ms-appdata:///Local/img/pwsh.jpg",
+                "backgroundImage": "%dotfiles%/wt/img/pwsh.jpg",
                 "cursorShape": "underscore"
             },
             {
@@ -75,7 +76,7 @@
                 "hidden": false,
                 "name": "kali-linux",
                 "source": "Windows.Terminal.Wsl",
-                "backgroundImage": "ms-appdata:///Local/img/kali.jpg",
+                "backgroundImage": "%dotfiles%/wt/img/kali.jpg",
                 "backgroundImageOpacity": 0.05
             },
             {
