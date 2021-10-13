@@ -34,7 +34,7 @@
             "backgroundImageStretchMode": "uniformToFill",
             "backgroundImageOpacity": 0.2,
             "fontFace": "CaskaydiaCove Nerd Font",
-            "bellStyle": "visual"
+            "bellStyle": "window"
         },
         "list":
         [
