@@ -261,8 +261,6 @@ Set-PSReadLineKeyHandler -Key ')',']','}' `
     }
 }
 
-# currently doesn't seem to be compatible with PredictionSource:History
-# (i.e. throws an error when deleting character that leads to a prediction)
 Set-PSReadLineKeyHandler -Key Backspace `
                          -BriefDescription SmartBackspace `
                          -LongDescription "Delete previous character or matching quotes/parens/braces" `
