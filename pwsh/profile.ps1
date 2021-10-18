@@ -31,18 +31,6 @@ oh-my-posh --init --shell pwsh --config ~/.dotfiles/ohmyposh/snacky.omp.json | I
 # }
 #endregion ---- /Chocolatey ----
 
-#region ---- PSReadLine ----
-# enable intellisense predictions from history
-Set-PSReadLineOption -PredictionSource History
-# move cursor to end when searching history
-Set-PSReadLineOption -HistorySearchCursorMovesToEnd
-# search history using up and down arrows
-Set-PSReadLineKeyHandler -Key UpArrow -Function HistorySearchBackward
-Set-PSReadLineKeyHandler -Key DownArrow -Function HistorySearchForward
-# screen-recording
-Set-PSReadLineKeyHandler -Chord 'Ctrl+k,Ctrl+c' -Function CaptureScreen
-#endregion ---- /PSReadLine ----
-
 # ArgumentCompleters add tab-completion for 3rd-party tools
 #region ---- ArgumentCompleters ----
 # winget
