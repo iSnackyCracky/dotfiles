@@ -5,18 +5,6 @@
       "alignment": "left",
       "segments": [
         {
-          "type": "session",
-          "style": "diamond",
-          "foreground": "#ffffff",
-          "background": "#c386f1",
-          "leading_diamond": "",
-          "trailing_diamond": "",
-          "properties": {
-            "default_user_name": "snacky",
-            "display_default": false
-          }
-        },
-        {
           "type": "path",
           "style": "powerline",
           "powerline_symbol": "",
