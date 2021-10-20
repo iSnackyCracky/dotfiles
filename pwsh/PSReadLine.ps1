@@ -92,6 +92,14 @@ Set-PSReadLineKeyHandler -Key 'Alt+{' `
     }
 }
 
+# open downloads folder
+Set-PSReadLineKeyHandler -Key 'Ctrl+j' `
+                         -BriefDescription OpenDownloads `
+                         -LongDescription "Open the downloads folder in explorer" `
+                         -ScriptBlock {
+    explorer.exe (New-Object -ComObject Shell.Application).NameSpace('shell:Downloads').Self.Path
+}
+
 # Sometimes you enter a command but realize you forgot to do something else first.
 # This binding will let you save that command in the history so you can recall it,
 # but it doesn't actually execute.  It also clears the line with RevertLine so the
