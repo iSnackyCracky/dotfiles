@@ -42,7 +42,7 @@ Set-PSReadLineKeyHandler -Key 'Alt+(' `
     }
 }
 
-Set-PSReadLineKeyHandler -Key 'Alt+(' `
+Set-PSReadLineKeyHandler -Key 'Alt+[' `
                          -BriefDescription ParenthesizeSelection `
                          -LongDescription "Put square brackets around the selection or entire line and move the cursor to after the closing brackets" `
                          -ScriptBlock {
