@@ -8,6 +8,21 @@ Set-PSReadLineOption -PredictionSource History
 Set-PSReadLineOption -HistorySearchCursorMovesToEnd
 #endregion ---- /Options ----
 
+#region ---- Aliases/Helper-Functions ----
+# Open explorer in current directory (or given Path)
+function e {
+    param(
+        # Specifies a path to one or more locations.
+        [Parameter(ValueFromPipeline=$true, ValueFromPipelineByPropertyName=$true)]
+        [Alias("PSPath")]
+        [ValidateNotNullOrEmpty()]
+        [string]
+        $Path = ".\"
+    )
+    Start-Process -FilePath explorer.exe -ArgumentList $Path
+}
+#endregion ---- Aliases/Helper-Functions ----
+
 #region ---- KeyHandlers ----
 # search history using up and down arrows
 Set-PSReadLineKeyHandler -Key UpArrow -Function HistorySearchBackward
@@ -118,6 +133,9 @@ Set-PSReadLineKeyHandler -Key Alt+w `
 }
 
 #region -- smart insertion/completion --
+
+# quote insertion/completion is more annoying than helpful
+<#
 Set-PSReadLineKeyHandler -Key '"',"'" `
                          -BriefDescription SmartInsertQuote `
                          -LongDescription "Insert paired quotes if not already on a quote" `
@@ -215,6 +233,7 @@ Set-PSReadLineKeyHandler -Key '"',"'" `
     # We failed to be smart, so just insert a single quote
     [Microsoft.PowerShell.PSConsoleReadLine]::Insert($quote)
 }
+#>
 
 Set-PSReadLineKeyHandler -Key '(','{','[' `
                          -BriefDescription InsertPairedBraces `
