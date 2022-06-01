@@ -17,6 +17,19 @@ New-Alias -Name dig -Value Resolve-Dns
 # Function definitions - larger functions should go into their own script-file and be imported (see above)
 #region ---- Functions ----
 function Set-VpnSplitTunneling { Get-VpnConnection | Set-VpnConnection -SplitTunneling $true }
+
+# Open explorer in current directory (or given Path)
+function e {
+    param(
+        # Specifies a path to one or more locations.
+        [Parameter(ValueFromPipeline=$true, ValueFromPipelineByPropertyName=$true)]
+        [Alias("PSPath")]
+        [ValidateNotNullOrEmpty()]
+        [string]
+        $Path = ".\"
+    )
+    Start-Process -FilePath explorer.exe -ArgumentList $Path
+}
 #endregion ---- /Functions ----
 
 #region ---- Oh-My-Posh 3 ----

@@ -8,21 +8,6 @@ Set-PSReadLineOption -PredictionSource History
 Set-PSReadLineOption -HistorySearchCursorMovesToEnd
 #endregion ---- /Options ----
 
-#region ---- Aliases/Helper-Functions ----
-# Open explorer in current directory (or given Path)
-function e {
-    param(
-        # Specifies a path to one or more locations.
-        [Parameter(ValueFromPipeline=$true, ValueFromPipelineByPropertyName=$true)]
-        [Alias("PSPath")]
-        [ValidateNotNullOrEmpty()]
-        [string]
-        $Path = ".\"
-    )
-    Start-Process -FilePath explorer.exe -ArgumentList $Path
-}
-#endregion ---- Aliases/Helper-Functions ----
-
 #region ---- KeyHandlers ----
 # search history using up and down arrows
 Set-PSReadLineKeyHandler -Key UpArrow -Function HistorySearchBackward
