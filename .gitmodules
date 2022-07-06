@@ -2,3 +2,4 @@
 	path = pwsh/pwsh-functions
 	url = https://github.com/iSnackyCracky/pwsh-functions
 	update = merge
+	branch = master
