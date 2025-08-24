@@ -1,3 +1,6 @@
+# Set PowerShell default encoding to utf8 (this is especially needed later for Oh-My-Posh)
+[console]::InputEncoding = [console]::OutputEncoding = New-Object System.Text.UTF8Encoding
+
 #region ---- Oh-My-Posh ----
 oh-my-posh init pwsh | Invoke-Expression
 #endregion ---- /Oh-My-Posh ----
@@ -29,7 +32,8 @@ $Deferred = {
     Import-Module -Name "Terminal-Icons"
 
     # Functions / Scripts
-    foreach ($script in (Get-ChildItem -Path "$env:dotfiles\pwsh" -Exclude profile.ps1 -Filter *.ps1 -Recurse)) {
+    Invoke-Expression ". ""$( (Get-Item $PROFILE).DirectoryName )\PSReadLine.ps1"""
+    foreach ($script in (Get-ChildItem -Path "$( (Get-Item $PROFILE).DirectoryName )\Functions" -Exclude profile.ps1 -Filter *.ps1 -Recurse)) {
         Invoke-Expression ". ""$script"""
     }
     #endregion ---- /Imports ----
