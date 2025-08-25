@@ -1,45 +1,24 @@
 # Set PowerShell default encoding to utf8 (this is especially needed later for Oh-My-Posh)
 [console]::InputEncoding = [console]::OutputEncoding = New-Object System.Text.UTF8Encoding
 
+$PROFILEPATH = (Get-Item $PROFILE).DirectoryName
+
 #region ---- Oh-My-Posh ----
 oh-my-posh init pwsh | Invoke-Expression
 #endregion ---- /Oh-My-Posh ----
-
-# ArgumentCompleters add tab-completion for 3rd-party tools
-#region ---- ArgumentCompleters ----
-# winget
-Register-ArgumentCompleter -Native -CommandName winget -ScriptBlock {
-    param($wordToComplete, $commandAst, $cursorPosition)
-    [Console]::InputEncoding = [Console]::OutputEncoding = $OutputEncoding = [System.Text.Utf7Encoding]::new()
-    $Local:word = $wordToComplete.Replace('"', '""')
-    $Local:ast = $commandAst.ToString().Replace('"', '""')
-    winget complete --word="$Local:word" --commandline "$Local:ast" --position $cursorPosition | ForEach-Object {
-        [System.Management.Automation.CompletionResult]::new($_, $_, 'ParameterValue', $_)
-    }
-}
-#endregion ---- /ArgumentCompleters ----
-
-# This is here to fix a rendering issue. Not sure if it's related to the Font, OhMyPosh or the Terminal but it works ¯\_(ツ)_/¯.
-#Clear-Host
 
 
 # Deferred profile loading, taken from
 # https://fsackur.github.io/2023/11/20/Deferred-profile-loading-for-better-performance/
 $Deferred = {
-    # "Import" or "source" settings and functions from other .dotfiles (to prevent clutter in the profile.ps1)
-    #region ---- Imports ----
-    # Modules
-    Import-Module -Name "Terminal-Icons"
+    Import-Module "Terminal-Icons"
 
-    # Functions / Scripts
-    Invoke-Expression ". ""$( (Get-Item $PROFILE).DirectoryName )\PSReadLine.ps1"""
-    foreach ($script in (Get-ChildItem -Path "$( (Get-Item $PROFILE).DirectoryName )\Functions" -Exclude profile.ps1 -Filter *.ps1 -Recurse)) {
+    # Functions / scripts / further profile config
+    foreach ($script in (Get-ChildItem -Path "$PROFILEPATH\Functions","$PROFILEPATH\Config" -Filter *.ps1 -Recurse)) {
         Invoke-Expression ". ""$script"""
     }
-    #endregion ---- /Imports ----
 
     # Function definitions - larger functions should go into their own script-file and be imported (see above)
-    #region ---- Functions ----
     function Set-VpnSplitTunneling($name) { if ($name) { $vpn = Get-VpnConnection $name } else { $vpn = Get-VpnConnection }; $vpn | Set-VpnConnection -SplitTunneling $true }
 
     function which($name) { Get-Command $name | Select-Object -ExpandProperty Definition }
@@ -60,10 +39,9 @@ $Deferred = {
     }
 
     function Test-CommandExists($command) { return ($null -ne (Get-Command $command -ErrorAction SilentlyContinue)) }
-    function Edit-Profile { vim "$env:DOTFILES\pwsh\profile.ps1" }
-    #endregion ---- /Functions ----
+    function Edit-Profile { chezmoi edit $PROFILE }
+    function ccd { Set-Location (chezmoi source-path) }
 
-    #region ---- Variables ----
     $EDITOR = if (Test-CommandExists nvim) { 'nvim' }
           elseif (Test-CommandExists pvim) { 'pvim' }
           elseif (Test-CommandExists vim) { 'vim' }
@@ -73,7 +51,6 @@ $Deferred = {
           elseif (Test-CommandExists notepad++) { 'notepad++' }
           elseif (Test-CommandExists sublime_text) { 'sublime_text' }
           else { 'notepad' }
-    #endregion ---- /Variables ----
 
     # Alias Definitions
     #region ---- Aliases ----
@@ -83,9 +60,22 @@ $Deferred = {
     New-Alias -Name vim -Value $EDITOR
     #endregion ---- /Aliases ----
 
-    #region ---- zoxide ----
+    # add zoxide
     Invoke-Expression (& { (zoxide init powershell | Out-String) })
-    #endregion ---- /zoxide ----
+
+    # winget ArgumentCompleter
+    Register-ArgumentCompleter -Native -CommandName winget -ScriptBlock {
+        param($wordToComplete, $commandAst, $cursorPosition)
+        $Local:word = $wordToComplete.Replace('"', '""')
+        $Local:ast = $commandAst.ToString().Replace('"', '""')
+        winget complete --word="$Local:word" --commandline "$Local:ast" --position $cursorPosition | ForEach-Object {
+            [System.Management.Automation.CompletionResult]::new($_, $_, 'ParameterValue', $_)
+        }
+    }
+
+    # Uncomment this to clear all errors stored in the $error variable after initializing profile
+    # This includes errors hidden by the '-ErrorAction SilentlyContinue' parameter
+    #$error.clear()
 }
 
 
