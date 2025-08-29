@@ -1,0 +1,8 @@
+#!/bin/pwsh
+# add DOTFILES environment variable
+{{- if eq .chezmoi.os "windows" }}
+$env:DOTFILES = {{ .chezmoi.sourceDir | replace "/" "\\" | squote }}
+{{- else }}
+$env:DOTFILES = {{ .chezmoi.sourceDir | squote }}
+{{- end }}
+[System.Environment]::SetEnvironmentVariable('DOTFILES', $env:DOTFILES, [System.EnvironmentVariableTarget]::User)
